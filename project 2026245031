@@ -1,0 +1,36 @@
+// 신체 스펙 구조체
+typedef struct {
+    float weight;
+    float muscle;
+    float fat;
+    int is_set; // 스펙 설정 여부 (0: 미설정, 1: 설정됨)
+} UserSpec;
+
+// 운동 기록 구조체
+typedef struct {
+    char name[50];
+    int sets;
+    float weight;
+    int reps;
+} ExerciseRecord;
+
+// 파일명 정의
+#const char* SPEC_FILE = "specs.txt";
+#const char* HISTORY_FILE = "history.txt";
+
+// 신체 스펙 불러오기 (파일 입출력)
+void load_specs(UserSpec* spec) {
+    FILE* file = fopen("specs.txt", "r");
+    if (file != NULL) {
+        if (fscanf(file, "%f %f %f", &spec->weight, &spec->muscle, &spec->fat) == 3) {
+            spec->is_set = 1;
+        }
+        else {
+            spec->is_set = 0;
+        }
+        fclose(file);
+    }
+    else {
+        spec->is_set = 0;
+    }
+}
